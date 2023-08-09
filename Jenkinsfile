@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     // Remove the container if it's already running
-                    docker.image('todo-dev').withRun('-p 8081:8081 --name jenkins-container') {
+                    docker.image('login-dev').withRun('-p 8081:8081 --name jenkins-container') {
                     }
                 } 
             }
