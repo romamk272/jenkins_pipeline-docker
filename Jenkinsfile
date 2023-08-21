@@ -12,10 +12,10 @@ pipeline {
             }
         }
         stage('Conditional PR Stage') {
+            echo "=============================================="
+            echo "        PR stage"
+            echo "=============================================="
             when {
-                echo "=============================================="
-                echo "        PR stage"
-                echo "=============================================="
                 expression {
                     echo "Inside PR stage expression statement"
                     // Check if the commit message contains a specific keyword
