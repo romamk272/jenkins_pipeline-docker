@@ -7,7 +7,7 @@ pipeline {
             steps {
                 script {
                     // Replace 'your-docker-image' with the name of your Docker image
-                    dockerImage = docker.build('login-dev','./deployment/Dockerfile')
+                    dockerImage = docker.build('login-dev')
                 }
             }
         }
