@@ -1,5 +1,6 @@
 def groovyScript
 def os
+<<<<<<< HEAD
 // pipeline {
 //     //agent { label 'CROSS-PLATFORM' }
 //     agent {
@@ -20,6 +21,9 @@ def os
 //         }
 //     }
 // }
+=======
+
+>>>>>>> e1d6257c024058f2e457056409f1d17b691f0707
 pipeline {
     agent any
     stages {
