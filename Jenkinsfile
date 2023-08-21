@@ -13,7 +13,11 @@ pipeline {
         }
         stage('Conditional PR Stage') {
             when {
+                echo "=============================================="
+                echo "        PR stage"
+                echo "=============================================="
                 expression {
+                    echo "Inside PR stage expression statement"
                     // Check if the commit message contains a specific keyword
                     def commitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
                     return commitMessage.contains("file")
@@ -22,6 +26,9 @@ pipeline {
             steps {
                 // This stage will run only if the commit message contains the REQUIRED_KEYWORD
                 echo "Running PR Stage"
+                echo "=============================================="
+                echo "        End of PR stage"
+                echo "=============================================="
                 // Add your PR stage steps here
             }
         }
