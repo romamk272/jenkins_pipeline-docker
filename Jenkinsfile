@@ -1,6 +1,5 @@
 def groovyScript
 def os
-
 // pipeline {
 //     //agent { label 'CROSS-PLATFORM' }
 //     agent {
@@ -21,12 +20,10 @@ def os
 //         }
 //     }
 // }
-
 pipeline {
     agent any
-    
     stages {
-        stage('Build Docker Image') {
+        stage('Build docker image') {
             steps {
                 script {
                     // Replace 'your-docker-image' with the name of your Docker image
@@ -34,43 +31,25 @@ pipeline {
                 }
             }
         }
-        // stage('Check if Container is Running') {
-        //     steps {
-        //         script {
-        //             try {
-        //                 // Check if the container is running
-        //                 docker.image('todo-dev').inside('-p 8081:8081 --name my-container') {
-        //                     // Do nothing, just check the container status
-        //                 }
-        //             } catch (Exception e) {
-        //                 // If the container is not running, it will throw an exception
-        //                 // Handle the exception here, or do nothing if you want to proceed anyway
-        //             }
-        //         }
-        //     }
-        // }
- 
-        // stage('Stop Existing Container') {
-        //     steps {
-        //         script {
-        //             // Stop the container if it's already running
-        //             try {
-        //                 sh 'docker stop my-container'
-        //             } catch (Exception e) {
-        //                 // If the container is not running, it will throw an exception
-        //                 // Handle the exception here, or do nothing if you want to proceed anyway
-        //             }
-        //         }
-        //     }
-        // }
-    
+        stage('Conditional PR Stage') {
+            when {
+                expression {
+                    // Check if the commit message contains a specific keyword
+                    def commitMessage = sh(script: 'git log -1 --pretty=%B', returnStdout: true).trim()
+                    return commitMessage.contains("file")
+                }
+            }
+            steps {
+                // This stage will run only if the commit message contains the REQUIRED_KEYWORD
+                echo "Running PR Stage"
+                // Add your PR stage steps here
+            }
+        }
         stage('Run Docker Container') {
             steps {
                 script {
                     // Remove the container if it's already running
-                    docker.image('todo-dev').withRun('-p 8081:8081 --name jenkins-container') {
-                        // The above line will run the container and map port 8081 inside the container to port 8081 on the host machine
-                        // Add any other configuration or environment variables if required for your application
+                    docker.image('login-dev').withRun('-p 8081:8081 --name jenkins-container') {
                     }
                 } 
             }
