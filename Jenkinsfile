@@ -12,9 +12,6 @@ pipeline {
             }
         }
         stage('Conditional PR Stage') {
-            echo "=============================================="
-            echo "        PR stage"
-            echo "=============================================="
             when {
                 expression {
                     echo "Inside PR stage expression statement"
